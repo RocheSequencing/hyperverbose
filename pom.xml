@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hyperverbose-root</artifactId>
+	<name>${project.artifactId}</name>
+	<description>Root aggregator module for the hyperverbose suite</description>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>com.roche.sequencing.hyperverbose</groupId>
+		<artifactId>hyperverbose-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>./hyperverbose-parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+		<module>hyperverbose-bom</module>
+		<module>hyperverbose-core</module>
+		<module>hyperverbose-parent</module>
+		<module>hyperverbose-words</module>
+	</modules>
+</project>

@@ -1,0 +1,6 @@
+abet
+bide
+create
+drink
+eat
+find
