@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# This is just a nice wrapper for the JAR.
+# See README.md for instructions.
+# Or invoke with --help
+
+set -eu -o pipefail
+
+WORDS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" > /dev/null && pwd)"
+#echo "WORDS_DIR: ${WORDS_DIR}"
+WORDS_JAR="${WORDS_DIR}/target/WordList.jar"
+#echo "WORDS_JAR: ${WORDS_JAR}"
+REBUILD_JAR="${REBUILD_JAR-}"
+
+if [[ ! -f "${WORDS_JAR}" || "${REBUILD_JAR}" -ne "" ]] ; then
+	pushd "${WORDS_DIR}/.."
+	mvn -DskipTests -am -pl hyperverbose-words clean package
+	popd
+fi
+
+java -jar "${WORDS_JAR}" "$@"

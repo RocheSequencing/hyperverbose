@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hyperverbose-parent</artifactId>
+	<groupId>com.roche.sequencing.hyperverbose</groupId>
+	<description>Common parent for all hyperverbose modules, focusing on build configuration</description>
+	<name>${project.artifactId}</name>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<lombok.version>1.18.12</lombok.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<picocli.version>4.2.0</picocli.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>**/application*.yml</include>
+					<include>**/application*.yaml</include>
+					<include>**/application*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>**/application*.yml</exclude>
+					<exclude>**/application*.yaml</exclude>
+					<exclude>**/application*.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+		<outputDirectory>${basedir}/target</outputDirectory>
+		<testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- annotationProcessorPaths requires maven-compiler-plugin version 3.5 or higher -->
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<release>8</release>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>info.picocli</groupId>
+							<artifactId>picocli-codegen</artifactId>
+							<version>${picocli.version}</version>
+						</path>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
+					<compilerArgs>
+						<arg>-parameters</arg>
+						<arg>-Werror</arg>
+						<arg>-Xlint:all</arg>
+						<arg>-Xlint:-processing</arg>
+					</compilerArgs>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- Lombok is scoped as provided since it is used only for annotation
+				processing during compile time. -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<distributionManagement>
+		<!-- We'll eventually add/move to Maven Central, but GH is fine for now -->
+		<repository>
+			<!-- This ID should match your settings.xml/settings/servers/server ID -->
+			<id>github-RocheSequencing</id>
+			<name>Github Packages for Maven</name>
+			<url>https://maven.pkg.github.com/RocheSequencing/hyperverbose</url>
+		</repository>
+		<snapshotRepository>
+			<!-- This ID should match your settings.xml/settings/servers/server ID, and the one above -->
+			<id>github-RocheSequencing</id>
+			<name>Github Packages for Maven</name>
+			<url>https://maven.pkg.github.com/RocheSequencing/hyperverbose</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<scm>
+		<developerConnection>scm:git:git://github.com/RocheSequencing/hyperverbose.git</developerConnection>
+	</scm>
+</project>

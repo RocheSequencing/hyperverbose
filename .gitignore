@@ -1,0 +1,23 @@
+# Eclipse
+.settings/
+.project/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Common Java
+target/
+
+# Common JS
+node_modules/
+
+# Common test
+test-output/
+
+# Common misc
+bin/
+.factorypath
+.classpath
+.DS_Store
+
